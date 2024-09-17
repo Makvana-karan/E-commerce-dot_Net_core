@@ -52,9 +52,17 @@ namespace E_commerce.Controllers
 
         public IActionResult Profile()
         {
-           var adminId = HttpContext.Session.GetString("admin_session");
+            string admin_session = HttpContext.Session.GetString("admin_session");
+            if (admin_session != null)
+            { 
+                var adminId = HttpContext.Session.GetString("admin_session");
           var ids = _context.tbl_admin.Where(a => a.admin_id == int.Parse(adminId)).ToList();
             return View(ids);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
         }
 
         [HttpPost]
